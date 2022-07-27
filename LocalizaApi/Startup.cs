@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using LocalizaApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace LocalizaApi
 {
@@ -20,6 +22,7 @@ namespace LocalizaApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocalizaApi", Version = "v1" });
             });
 
+            services.AddDbContext<BancoDadosContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BaseConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
