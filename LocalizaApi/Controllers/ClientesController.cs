@@ -49,6 +49,33 @@ namespace LocalizaApi.Controllers
             return cliente;
         }
 
+        [HttpGet("{login}")]
+        public async Task<ActionResult<Cliente>> GetClienteAcesso(string login, string senha)
+        {
+            try
+            {
+                if (_context.tab_Cliente == null)
+                {
+                    return NotFound();
+                }
+
+                senha = Functions.Criptografia.Descriptografar(senha);
+                var cliente = await _context.tab_Cliente.Where(c => c.Nome == login).Where(c => c.Senha == senha).ToListAsync();
+
+                if (cliente == null)
+                {
+                    return NotFound();
+                }
+
+                return cliente[0];
+            }
+
+            catch (Exception ex)
+            {
+                return Problem($"Erro ao tentar acessar: {ex.Message}");
+            }
+        }
+
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -85,14 +112,24 @@ namespace LocalizaApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-          if (_context.tab_Cliente == null)
-          {
-              return Problem("Entity set 'BancoDadosContext.tab_Cliente'  is null.");
-          }
-            _context.tab_Cliente.Add(cliente);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (_context.tab_Cliente == null)
+                {
+                    return Problem("Entity set 'BancoDadosContext.tab_Cliente'  is null.");
+                }
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id_Cliente }, cliente);
+                cliente.Senha = Functions.Criptografia.Criptografar(cliente.Senha);
+
+                _context.tab_Cliente.Add(cliente);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetCliente", new { id = cliente.Id_Cliente }, cliente);
+            }
+            catch (Exception ex)
+            {
+                return Problem($"Erro ao tentar incluir um novo cliente: {ex.Message}");
+            }
         }
 
         // DELETE: api/Clientes/5
