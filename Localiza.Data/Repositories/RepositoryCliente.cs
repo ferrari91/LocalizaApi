@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Localiza.Data.Repositories
 {
-    internal class RepositoryCliente : RepositoryBase<TabCliente>, IRepositoryCliente
+    public class RepositoryCliente : RepositoryBase<TabCliente>, IRepositoryCliente
     {
         public RepositoryCliente(bool saves = true) : base (saves)
         {

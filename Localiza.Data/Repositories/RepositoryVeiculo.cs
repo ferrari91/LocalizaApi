@@ -8,7 +8,7 @@ using Localiza.Data.Models;
 
 namespace Localiza.Data.Repositories
 {
-    internal class RepositoryVeiculo : RepositoryBase<TabVeiculo>, IRepositoryVeiculo
+    public class RepositoryVeiculo : RepositoryBase<TabVeiculo>, IRepositoryVeiculo
     {
         public RepositoryVeiculo(bool saves = true) : base(saves)
         {
