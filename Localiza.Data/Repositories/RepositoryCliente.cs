@@ -36,7 +36,12 @@ namespace Localiza.Data.Repositories
 
         public bool Acesso(string Login, string Senha)
         {
-            var usuario = _context.TabCliente.Where(c => c.Documento == Login).Where(c => c.Senha == Functions.Criptografia.Criptografar(Senha)).First();
+            var todosClientes   = _context.TabCliente.ToList().Where(x => x.Documento == Login || x.Nome == Login).Where(x => x.Senha == Functions.Criptografia.Criptografar(Senha)).ToList();
+
+            if (todosClientes.Count() == 0)
+                return false;
+
+            var usuario = todosClientes.First();
 
             if (usuario == null || usuario.NivelAcesso <= 0)
                 return false;

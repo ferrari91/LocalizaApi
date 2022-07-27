@@ -13,7 +13,7 @@ namespace Localiza.Data.Repositories
         protected localizaDBContext _context;
         public bool _Saves = true;
 
-        public  RepositoryBase(bool saves = true)
+        public RepositoryBase(bool saves = true)
         {
             _Saves = saves;
             _context = new localizaDBContext();
@@ -38,7 +38,7 @@ namespace Localiza.Data.Repositories
 
         public virtual void Excluir(T obj)
         {
-           _context.Set<T>().Remove(obj);
+            _context.Set<T>().Remove(obj);
 
             if (_Saves)
             {
@@ -77,7 +77,5 @@ namespace Localiza.Data.Repositories
         {
             return _context.Set<T>().ToList();
         }
-
-       
     }
 }

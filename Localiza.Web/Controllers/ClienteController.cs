@@ -11,6 +11,12 @@ namespace Localiza.Web.Controllers
 
         public IActionResult Index()
         {
+            var acessado = HttpContext.Session.GetString("User");
+            if (String.IsNullOrEmpty(acessado))
+            {
+                return RedirectToAction("Index", "Cliente");
+            }
+
             List<TabCliente> _ClienteLista = _ServiceCliente._Repository.SelecionarTodos();
             return View(_ClienteLista);
         }
