@@ -13,18 +13,18 @@ namespace Localiza.Data.Repositories
         protected localizaDBContext _context;
         public bool _Saves = true;
 
-        public RepositoryBase(bool saves = true)
+        public  RepositoryBase(bool saves = true)
         {
             _Saves = saves;
             _context = new localizaDBContext();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _context.Dispose();
         }
 
-        public T Editar(T obj)
+        public virtual T Editar(T obj)
         {
             _context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
@@ -36,7 +36,7 @@ namespace Localiza.Data.Repositories
             return obj;
         }
 
-        public void Excluir(T obj)
+        public virtual void Excluir(T obj)
         {
            _context.Set<T>().Remove(obj);
 
@@ -46,13 +46,13 @@ namespace Localiza.Data.Repositories
             }
         }
 
-        public void Excluir(params object[] value)
+        public virtual void Excluir(params object[] value)
         {
             var obj = SelecionarPrimaryKey(value);
             Excluir(obj);
         }
 
-        public T Incluir(T obj)
+        public virtual T Incluir(T obj)
         {
             _context.Set<T>().Add(obj);
 
@@ -63,19 +63,21 @@ namespace Localiza.Data.Repositories
             return obj;
         }
 
-        public void Salvar()
+        public virtual void Salvar()
         {
             _context.SaveChanges();
         }
 
-        public T SelecionarPrimaryKey(params object[] value)
+        public virtual T SelecionarPrimaryKey(params object[] value)
         {
             return _context.Set<T>().Find(value);
         }
 
-        public List<T> SelecionarTodos()
+        public virtual List<T> SelecionarTodos()
         {
             return _context.Set<T>().ToList();
         }
+
+       
     }
 }
