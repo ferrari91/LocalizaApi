@@ -21,7 +21,9 @@ namespace Localiza.Data.Models
         public int CodigoMarca { get; set; }
         [StringLength(4)]
         public string Ano { get; set; }
-        [Column(TypeName = "numeric(15, 2)")]
+
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(15, 2)")]
         public decimal Valor { get; set; }
         [StringLength(35)]
         public string Combustivel { get; set; }
