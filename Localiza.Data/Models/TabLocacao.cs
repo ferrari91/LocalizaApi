@@ -16,20 +16,17 @@ namespace Localiza.Data.Models
         public int IdAgendamento { get; set; }
         [Column("Codigo_Veiculo")]
         public int? CodigoVeiculo { get; set; }
-        [Column("Data_Inicial", TypeName = "date")]
+        [Column("Data_Inicial", TypeName = "datetime")]
         public DateTime? DataInicial { get; set; }
-        [Column("Data_Final", TypeName = "date")]
+        [Column("Data_Final", TypeName = "datetime")]
         public DateTime? DataFinal { get; set; }
         [Column(TypeName = "numeric(18, 2)")]
         public decimal? Total { get; set; }
         [Column("Carro_Limpo")]
         public bool? CarroLimpo { get; set; }
-       
         [Column("Tanque_Cheio")]
         public bool? TanqueCheio { get; set; }
-       
         public bool? Amassados { get; set; }
-       
         public bool? Arranhoes { get; set; }
 
         [ForeignKey("CodigoVeiculo")]

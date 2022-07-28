@@ -46,20 +46,37 @@ namespace Localiza.Data.Repositories
 
         public override TabLocacao Editar(TabLocacao obj)
         {
-            decimal horas = Convert.ToDecimal((obj.DataFinal - obj.DataInicial).Value.TotalHours);
-            var totalLiquido = obj.CodigoVeiculoNavigation.Valor * horas;
-            obj.Total = obj.CodigoVeiculoNavigation.Valor * horas;
+            ServiceVeiculo service = new ServiceVeiculo();
 
-            if (obj.CarroLimpo == false)
-                obj.Total += (totalLiquido * 30) / 100;
-            if (obj.TanqueCheio == false)
-                obj.Total += (totalLiquido * 30) / 100;
-            if (obj.Amassados == true)
-                obj.Total += (totalLiquido * 30) / 100;
-            if (obj.Arranhoes == true)
-                obj.Total += (totalLiquido * 30) / 100;
+            var veiculo = service._Repository.SelecionarPrimaryKey(obj.CodigoVeiculo);
+            if (veiculo != null)
+                obj.CodigoVeiculoNavigation = veiculo;
+
+            if (obj.DataFinal.HasValue && obj.DataInicial.HasValue && obj.CodigoVeiculoNavigation != null)
+            {
+                decimal horas = Convert.ToDecimal((obj.DataFinal - obj.DataInicial).Value.TotalHours);
+                var totalLiquido = obj.CodigoVeiculoNavigation.Valor * horas;
+                obj.Total = obj.CodigoVeiculoNavigation.Valor * horas;
+
+                if (obj.CarroLimpo == false)
+                    obj.Total += (totalLiquido * 30) / 100;
+                if (obj.TanqueCheio == false)
+                    obj.Total += (totalLiquido * 30) / 100;
+                if (obj.Amassados == true)
+                    obj.Total += (totalLiquido * 30) / 100;
+                if (obj.Arranhoes == true)
+                    obj.Total += (totalLiquido * 30) / 100;
+            }
+
+            
           
             return base.Editar(obj);
+        }
+
+        public List<TabVeiculo> Veiculos()
+        {
+            RepositoryVeiculo veiculo = new RepositoryVeiculo();
+            return veiculo.SelecionarTodos();
         }
     }
 }

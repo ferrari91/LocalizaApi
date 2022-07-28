@@ -26,9 +26,6 @@ namespace Localiza.Web.Controllers
             }
 
             ViewBag.CodigoMarca = modelos;
-
-           
-
             return View(_VeiculosLista);
         }
 

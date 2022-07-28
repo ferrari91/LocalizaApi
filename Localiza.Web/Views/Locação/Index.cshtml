@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Localiza.Data.Models.TabLocacao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInicial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFinal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarroLimpo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TanqueCheio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amassados)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Arranhoes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoVeiculoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarroLimpo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TanqueCheio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amassados)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Arranhoes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoVeiculoNavigation.IdVeiculo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAgendamento">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAgendamento">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAgendamento">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

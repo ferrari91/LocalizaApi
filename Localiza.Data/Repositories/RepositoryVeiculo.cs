@@ -35,11 +35,15 @@ namespace Localiza.Data.Repositories
         public override TabVeiculo SelecionarPrimaryKey(params object[] value)
         {
             var veiculo = base.SelecionarPrimaryKey(value);
-            ServiceVeiculoModelo service = new ServiceVeiculoModelo();
 
-            var marca = service._Repository.SelecionarPrimaryKey(veiculo.CodigoMarca);
-            if (marca != null)
-                veiculo.CodigoMarcaNavigation = marca;
+            if (veiculo != null)
+            {
+                ServiceVeiculoModelo service = new ServiceVeiculoModelo();
+
+                var marca = service._Repository.SelecionarPrimaryKey(veiculo.CodigoMarca);
+                if (marca != null)
+                    veiculo.CodigoMarcaNavigation = marca;
+            }
 
             return veiculo;
         }
