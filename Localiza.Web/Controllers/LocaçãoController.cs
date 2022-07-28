@@ -11,6 +11,12 @@ namespace Localiza.Web.Controllers
 
         public IActionResult Index()
         {
+            var acessado = HttpContext.Session.GetString("User");
+            if (String.IsNullOrEmpty(acessado))
+            {
+                return RedirectToAction("Index", "Acesso");
+            }
+
             List<TabLocacao> _lista = _Service._Repository.SelecionarTodos();
 
             var veiculos = new List<SelectListItem>();
