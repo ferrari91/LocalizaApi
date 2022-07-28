@@ -19,6 +19,7 @@ namespace Localiza.Data.Models
         }
 
         public virtual DbSet<TabCliente> TabCliente { get; set; }
+        public virtual DbSet<TabLocacao> TabLocacao { get; set; }
         public virtual DbSet<TabVeiculo> TabVeiculo { get; set; }
         public virtual DbSet<TbVeiculoModelo> TbVeiculoModelo { get; set; }
 
@@ -32,6 +33,17 @@ namespace Localiza.Data.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TabLocacao>(entity =>
+            {
+                entity.HasKey(e => e.IdAgendamento)
+                    .HasName("PK_Tab_Locacão");
+
+                entity.HasOne(d => d.CodigoVeiculoNavigation)
+                    .WithMany(p => p.TabLocacao)
+                    .HasForeignKey(d => d.CodigoVeiculo)
+                    .HasConstraintName("FK_Tab_Locacao_Veiculo");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 

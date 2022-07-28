@@ -36,4 +36,14 @@ namespace Localiza.Data.Services
             _Repository = new RepositoryVeiculoModelo();
         }
     }
+
+    public class ServiceLocação
+    {
+        public RepositoryLocação _Repository { get; set; }
+
+        public ServiceLocação()
+        {
+            _Repository = new RepositoryLocação();
+        }
+    }
 }

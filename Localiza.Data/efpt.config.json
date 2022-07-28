@@ -18,6 +18,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Tab_Locacao]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tab_Veiculo]",
          "ObjectType": 0
       },

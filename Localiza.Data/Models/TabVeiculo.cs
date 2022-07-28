@@ -12,6 +12,11 @@ namespace Localiza.Data.Models
     [Index("CodigoMarca", Name = "IX_tab_Veiculo_Codigo_Marca")]
     public partial class TabVeiculo
     {
+        public TabVeiculo()
+        {
+            TabLocacao = new HashSet<TabLocacao>();
+        }
+
         [Key]
         [Column("Id_Veiculo")]
         public int IdVeiculo { get; set; }
@@ -21,9 +26,7 @@ namespace Localiza.Data.Models
         public int CodigoMarca { get; set; }
         [StringLength(4)]
         public string Ano { get; set; }
-
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "decimal(15, 2)")]
+        [Column(TypeName = "numeric(15, 2)")]
         public decimal Valor { get; set; }
         [StringLength(35)]
         public string Combustivel { get; set; }
@@ -36,5 +39,7 @@ namespace Localiza.Data.Models
         [ForeignKey("CodigoMarca")]
         [InverseProperty("TabVeiculo")]
         public virtual TbVeiculoModelo CodigoMarcaNavigation { get; set; }
+        [InverseProperty("CodigoVeiculoNavigation")]
+        public virtual ICollection<TabLocacao> TabLocacao { get; set; }
     }
 }
