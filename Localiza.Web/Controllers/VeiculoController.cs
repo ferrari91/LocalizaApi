@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Localiza.Web.Controllers
 {
-
-    public class ClienteController : Controller
+    public class VeiculoController : Controller
     {
-        private ServiceCliente _ServiceCliente = new ServiceCliente();
+        private ServiceVeiculo _ServiceVeiculo = new ServiceVeiculo();
 
         public IActionResult Index()
         {
@@ -18,8 +17,19 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            List<TabCliente> _ClienteLista = _ServiceCliente._Repository.SelecionarTodos();
-            return View(_ClienteLista);
+            List<TabVeiculo> _VeiculosLista = _ServiceVeiculo._Repository.SelecionarTodos();
+            
+            var modelos = new List<SelectListItem>();
+            foreach (var item in _ServiceVeiculo._Repository.ModelosMarcas())
+            {
+                modelos.Add(new SelectListItem() { Value = item.IdMarca.ToString(), Text = $"Marca: {item.Marca} Modelo: {item.Modelo}" });
+            }
+
+            ViewBag.CodigoMarca = modelos;
+
+
+
+            return View(_VeiculosLista);
         }
 
         public IActionResult Create()
@@ -30,14 +40,18 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
+            var modelos = new List<SelectListItem>();
+            foreach (var item in _ServiceVeiculo._Repository.ModelosMarcas())
+            {
+                modelos.Add(new SelectListItem() { Value = item.IdMarca.ToString(), Text = $"Marca: {item.Marca} Modelo: {item.Modelo}" });
+            }
 
-           
-
+            ViewBag.CodigoMarca = modelos;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(TabCliente obj)
+        public IActionResult Create(TabVeiculo obj)
         {
             var acessado = HttpContext.Session.GetString("User");
             if (String.IsNullOrEmpty(acessado))
@@ -49,7 +63,7 @@ namespace Localiza.Web.Controllers
             {
                 return View();
             }
-            _ServiceCliente._Repository.Incluir(obj);
+            _ServiceVeiculo._Repository.Incluir(obj);
             return RedirectToAction("Index");
         }
 
@@ -61,8 +75,7 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            var cliente = _ServiceCliente._Repository.SelecionarPrimaryKey(id);
-
+            var cliente = _ServiceVeiculo._Repository.SelecionarPrimaryKey(id);
             return View(cliente);
         }
 
@@ -74,12 +87,20 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            var cliente = _ServiceCliente._Repository.SelecionarPrimaryKey(id);
+            var modelos = new List<SelectListItem>();
+            foreach (var item in _ServiceVeiculo._Repository.ModelosMarcas())
+            {
+                modelos.Add(new SelectListItem() { Value = item.IdMarca.ToString(), Text = $"Marca: {item.Marca} Modelo: {item.Modelo}" });
+            }
+
+            ViewBag.CodigoMarca = modelos;
+
+            var cliente = _ServiceVeiculo._Repository.SelecionarPrimaryKey(id);
             return View(cliente);
         }
 
         [HttpPost]
-        public IActionResult Edit(TabCliente obj)
+        public IActionResult Edit(TabVeiculo obj)
         {
             var acessado = HttpContext.Session.GetString("User");
             if (String.IsNullOrEmpty(acessado))
@@ -91,7 +112,16 @@ namespace Localiza.Web.Controllers
             {
                 return View();
             }
-            _ServiceCliente._Repository.Editar(obj);
+
+            var modelos = new List<SelectListItem>();
+            foreach (var item in _ServiceVeiculo._Repository.ModelosMarcas())
+            {
+                modelos.Add(new SelectListItem() { Value = item.IdMarca.ToString(), Text = $"Marca: {item.Marca} Modelo: {item.Modelo}" });
+            }
+
+            ViewBag.CodigoMarca = modelos;
+
+            _ServiceVeiculo._Repository.Editar(obj);
             return RedirectToAction("Index");
         }
 
@@ -103,7 +133,7 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            _ServiceCliente._Repository.Excluir(id);
+            _ServiceVeiculo._Repository.Excluir(id);
             return RedirectToAction("Index");
         }
     }

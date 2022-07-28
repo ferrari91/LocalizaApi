@@ -1,14 +1,12 @@
 ﻿using Localiza.Data.Models;
 using Localiza.Data.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Localiza.Web.Controllers
 {
-
-    public class ClienteController : Controller
+    public class VeiculoModeloController : Controller
     {
-        private ServiceCliente _ServiceCliente = new ServiceCliente();
+        private ServiceVeiculoModelo _Service = new ServiceVeiculoModelo();
 
         public IActionResult Index()
         {
@@ -18,7 +16,7 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            List<TabCliente> _ClienteLista = _ServiceCliente._Repository.SelecionarTodos();
+            List<TbVeiculoModelo> _ClienteLista = _Service._Repository.SelecionarTodos();
             return View(_ClienteLista);
         }
 
@@ -30,14 +28,11 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-
-           
-
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(TabCliente obj)
+        public IActionResult Create(TbVeiculoModelo obj)
         {
             var acessado = HttpContext.Session.GetString("User");
             if (String.IsNullOrEmpty(acessado))
@@ -49,7 +44,7 @@ namespace Localiza.Web.Controllers
             {
                 return View();
             }
-            _ServiceCliente._Repository.Incluir(obj);
+            _Service._Repository.Incluir(obj);
             return RedirectToAction("Index");
         }
 
@@ -61,7 +56,7 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            var cliente = _ServiceCliente._Repository.SelecionarPrimaryKey(id);
+            var cliente = _Service._Repository.SelecionarPrimaryKey(id);
 
             return View(cliente);
         }
@@ -74,12 +69,12 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            var cliente = _ServiceCliente._Repository.SelecionarPrimaryKey(id);
+            var cliente = _Service._Repository.SelecionarPrimaryKey(id);
             return View(cliente);
         }
 
         [HttpPost]
-        public IActionResult Edit(TabCliente obj)
+        public IActionResult Edit(TbVeiculoModelo obj)
         {
             var acessado = HttpContext.Session.GetString("User");
             if (String.IsNullOrEmpty(acessado))
@@ -91,7 +86,7 @@ namespace Localiza.Web.Controllers
             {
                 return View();
             }
-            _ServiceCliente._Repository.Editar(obj);
+            _Service._Repository.Editar(obj);
             return RedirectToAction("Index");
         }
 
@@ -103,7 +98,7 @@ namespace Localiza.Web.Controllers
                 return RedirectToAction("Index", "Acesso");
             }
 
-            _ServiceCliente._Repository.Excluir(id);
+            _Service._Repository.Excluir(id);
             return RedirectToAction("Index");
         }
     }

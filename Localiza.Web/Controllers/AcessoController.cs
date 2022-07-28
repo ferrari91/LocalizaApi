@@ -19,7 +19,7 @@ namespace Localiza.Web.Controllers
             if (permitido)
             {
                 HttpContext.Session.SetString("User", Nome);
-                return RedirectToAction("Index", "Cliente");
+                return RedirectToAction("Index", "Home");
             }
             
             return RedirectToAction("Index");
